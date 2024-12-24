@@ -1,0 +1,21 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: j
+  datasource:
+    url: jdbc:mysql://localhost:3306/j?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+logging:
+  level:
+    root: info
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+knife4j:
+  enable: true
+  production: false
