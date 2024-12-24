@@ -1,0 +1,48 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: oauth-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/j?rewriteBatchedStatements=true&allowMultiQueries=true
+    username: root
+    password: 123456
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh_cn
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#日志配置（logback）
+logging:
+  file:
+    #日志文件路径
+    path: log
+    #日志文件名称
+    name: ${logging.file.path}/${spring.application.name}.log
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%5p) %clr(${PID:-}){magenta} --- %clr([%15.15t]@[%19(%X{traceId})]){faint} %clr(%-40.40logger{39}){cyan} : %m%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:-} --- [%15.15t]@[%19(%X{traceId})] %-40.40logger{39} : %m%n'
+  logback:
+    rollingpolicy:
+      #用于创建日志归档的文件名模式
+      file-name-pattern: ${logging.file.path}/%d{yyyy-MM-dd,aux}/${spring.application.name}.%d{yyyy-MM-dd_HH}.%i.log
+      #日志文件归档前的最大尺寸（文件最大体积，达到这个体积就会归档）。
+      max-file-size: 5GB
+      #要保留的归档日志文件的最大天数（默认为7）
+      max-history: 7
+      #应用程序启动时，是否行日志归档清理
+      clean-history-on-start: false
+      #日志档案在被删除前的最大尺寸（归档文件最大占用大小，超过这个大小后会被删除）
+      total-size-cap: 5GB
+  level:
+    root: info
