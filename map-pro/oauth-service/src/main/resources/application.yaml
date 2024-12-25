@@ -83,5 +83,5 @@ logging:
       #日志档案在被删除前的最大尺寸（归档文件最大占用大小，超过这个大小后会被删除）
       total-size-cap: 5GB
   level:
-    root: info
+    root: debug
 
