@@ -1,19 +1,31 @@
 server:
   port: 10001
 
-#spring:
-#  application:
-#    name: oauth-service
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/j?rewriteBatchedStatements=true&allowMultiQueries=true
-#    username: root
-#    password: 123456
 spring:
   application:
     name: oauth-service
-  h2:
-    console:
-      enabled: true  # 启用 H2 控制台
+  datasource:
+    url: jdbc:mysql://localhost:3306/j?rewriteBatchedStatements=true&allowMultiQueries=true
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 10000
+      lettuce:
+        pool:
+          # 最大连接数(使用负值表示没有限制) 默认为 8
+          max-active: 10
+          # 最大阻塞等待时间(使用负值表示没有限制) 默认为 -1 ms
+          max-wait: -1
+          # 最大空闲连接 默认为 8
+          max-idle: 5
+          # 最小空闲连接 默认为 0
+          min-idle: 0
+
+
 #  security:
 #    oauth2:
 #      client:
@@ -83,5 +95,14 @@ logging:
       #日志档案在被删除前的最大尺寸（归档文件最大占用大小，超过这个大小后会被删除）
       total-size-cap: 5GB
   level:
-    root: info
+    org.springframework.security: DEBUG
+    org.springframework.security.web: DEBUG
+    org.springframework.security.authentication: DEBUG
+    org.springframework.security.core: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    com.baomidou.mybatisplus.core: DEBUG
+    org.mybatis.spring: DEBUG
+    com.baomidou.mybatisplus.extension.plugins: DEBUG
+    com.baomidou.mybatisplus.core.MybatisPlus: DEBUG
+    org.mybatis: DEBUG
 

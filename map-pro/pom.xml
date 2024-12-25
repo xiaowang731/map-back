@@ -16,7 +16,10 @@
 
 
     <modules>
-            <module>oauth-service</module>
+        <module>oauth-service</module>
+        <module>oauth2-client</module>
+        <module>fs</module>
+
     </modules>
     <!-- 依赖管理 -->
     <dependencies>
