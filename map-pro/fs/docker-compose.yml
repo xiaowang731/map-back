@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # Spring Boot 应用
+  app:
+    image: openjdk:21-jre-slim
+    container_name: spring-boot-app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./fs-0.0.1-SNAPSHOT.jar:/app/fs-0.0.1-SNAPSHOT.jar  # 将本地 JAR 文件挂载到容器
+    command: java -jar /app/fs-0.0.1-SNAPSHOT.jar
+    environment:
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_REDIS_HOST=redis
+    depends_on:
+      - mysql
+      - redis
+
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: fs
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  # Redis 缓存
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      - app-network
+
+# 持久化 MySQL 数据
+volumes:
+  mysql-data:
+
+# 网络配置
+networks:
+  app-network:
+    driver: bridge
